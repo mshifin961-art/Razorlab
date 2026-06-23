@@ -5,6 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RazorLab | Premium Personalized Shaving</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    
+    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
+
     <style>
         /* Custom Premium Utilities */
         .metallic-text {
@@ -21,7 +24,7 @@
             backdrop-filter: blur(12px);
             border: 1px solid rgba(156, 163, 175, 0.15);
         }
-        /* Simple float animation for the 3D placeholder */
+        /* Simple float animation */
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-15px); }
@@ -34,7 +37,6 @@
 </head>
 <body class="bg-black text-gray-200 font-sans antialiased selection:bg-gray-700 selection:text-white">
 
-    <!-- Navbar -->
     <nav class="fixed w-full z-50 glass-panel border-b-0">
         <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
             <h1 class="text-2xl font-bold tracking-widest metallic-text">RAZORLAB</h1>
@@ -49,9 +51,7 @@
         </div>
     </nav>
 
-    <!-- Hero Section -->
     <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Abstract Background Glow -->
         <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gray-800 rounded-full blur-[120px] opacity-30 pointer-events-none"></div>
         
         <div class="relative z-10 text-center max-w-4xl px-6">
@@ -62,9 +62,22 @@
                 Analyze your beard. Customize your blade. Master your routine. Experience the ultimate personalized shave.
             </p>
             
-            <!-- 3D Razor Placeholder (Replace with Three.js Canvas later) -->
-            <div class="w-64 h-64 mx-auto mb-10 metallic-bg rounded-full flex items-center justify-center animate-float shadow-2xl">
-                <span class="text-gray-400 text-sm tracking-widest">[ 3D RAZOR MODEL ]</span>
+            <div class="w-80 h-80 mx-auto mb-10 relative animate-float">
+                <div class="absolute inset-0 bg-gray-800 rounded-full blur-[60px] opacity-40"></div>
+                <model-viewer 
+                    src="razor-model.glb" 
+                    alt="3D Razor Model" 
+                    auto-rotate 
+                    rotation-per-second="30deg"
+                    camera-controls 
+                    disable-zoom
+                    shadow-intensity="1" 
+                    environment-image="neutral"
+                    class="w-full h-full relative z-10 drop-shadow-2xl">
+                    <div class="absolute inset-0 flex items-center justify-center text-gray-500 text-sm -z-10">
+                        [ 3D Model Loading... ]
+                    </div>
+                </model-viewer>
             </div>
 
             <div class="flex flex-col sm:flex-row justify-center gap-4">
@@ -78,12 +91,10 @@
         </div>
     </section>
 
-    <!-- Features Grid -->
     <section class="py-24 px-6 max-w-7xl mx-auto" id="features">
         <h3 class="text-3xl font-bold mb-12 text-center metallic-text">The RazorLab Ecosystem</h3>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
             
-            <!-- Feature 1 -->
             <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
                 <div class="text-4xl mb-4">🧔</div>
                 <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">AI Beard Analyzer</h4>
@@ -92,7 +103,6 @@
                 </p>
             </div>
 
-            <!-- Feature 2 -->
             <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
                 <div class="text-4xl mb-4">🧴</div>
                 <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">Routine Generator</h4>
@@ -101,7 +111,6 @@
                 </p>
             </div>
 
-            <!-- Feature 3 -->
             <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
                 <div class="text-4xl mb-4">📅</div>
                 <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">Smart Reminders</h4>
@@ -112,11 +121,10 @@
 
         </div>
     </section>
-    <!-- Build Your Razor Section -->
+
     <section id="build" class="py-24 px-6 max-w-7xl mx-auto border-t border-gray-800 mt-10">
         <div class="flex flex-col md:flex-row gap-12 items-center">
             
-            <!-- Left: Visual Preview -->
             <div class="w-full md:w-1/2 flex justify-center">
                 <div class="w-72 h-72 md:w-96 md:h-96 rounded-full metallic-bg flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.05)] relative">
                     <div id="razor-preview-color" class="w-16 h-48 bg-gray-300 rounded-lg shadow-inner transition-colors duration-500"></div>
@@ -124,14 +132,12 @@
                 </div>
             </div>
 
-            <!-- Right: Customization Controls -->
             <div class="w-full md:w-1/2 space-y-8">
                 <div>
                     <h3 class="text-4xl font-extrabold mb-2 metallic-text">Build Your Razor</h3>
                     <p class="text-gray-400">Customize every detail for the perfect shave.</p>
                 </div>
 
-                <!-- Color Selection -->
                 <div>
                     <h4 class="text-sm uppercase tracking-widest text-gray-500 mb-4 font-bold">1. Handle Color</h4>
                     <div class="flex gap-4">
@@ -141,7 +147,6 @@
                     </div>
                 </div>
 
-                <!-- Blade Selection -->
                 <div>
                     <h4 class="text-sm uppercase tracking-widest text-gray-500 mb-4 font-bold">2. Blade Type</h4>
                     <div class="grid grid-cols-2 gap-4 text-center">
@@ -154,7 +159,6 @@
                     </div>
                 </div>
 
-                <!-- Price and Checkout -->
                 <div class="pt-6 border-t border-gray-800 flex justify-between items-center">
                     <span class="text-3xl font-bold text-white">₹1,499</span>
                     <button class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
@@ -165,7 +169,6 @@
         </div>
     </section>
 
-    <!-- Customization Script -->
     <script>
         function changeColor(colorClass) {
             const preview = document.getElementById('razor-preview-color');
@@ -177,7 +180,6 @@
         }
     </script>
 
-    <!-- Footer -->
     <footer class="border-t border-gray-800 py-10 mt-20">
         <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
             <p class="text-gray-500 text-sm">© 2026 RazorLab. All rights reserved.</p>
@@ -188,14 +190,14 @@
             </div>
         </div>
     </footer>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    
     <script>
         // Initialize ScrollTrigger
         gsap.registerPlugin(ScrollTrigger);
 
-        // 1. Hero Section Fade-in (Plays automatically when site loads)
+        // 1. Hero Section Fade-in
         gsap.from("nav", { y: -50, opacity: 0, duration: 1, ease: "power3.out" });
         gsap.from(".pt-20 h2, .pt-20 p, .pt-20 div", { 
             y: 40, 
@@ -206,16 +208,16 @@
             delay: 0.3
         });
 
-        // 2. Features Grid Reveal (Plays when user scrolls down)
+        // 2. Features Grid Reveal
         gsap.from("#features .glass-panel", {
             scrollTrigger: {
                 trigger: "#features",
-                start: "top 80%", // Triggers when the section reaches 80% of screen height
+                start: "top 80%",
             },
             y: 50,
             opacity: 0,
             duration: 0.8,
-            stagger: 0.2, // Each card comes up one after another
+            stagger: 0.2,
             ease: "power2.out"
         });
 
@@ -233,4 +235,4 @@
     </script>
 
 </body>
-  </html>
+                </html>
