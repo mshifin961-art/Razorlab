@@ -64,6 +64,7 @@
             
             <div class="w-80 h-80 mx-auto mb-10 relative animate-float">
                 <div class="absolute inset-0 bg-gray-800 rounded-full blur-[60px] opacity-40"></div>
+                
                 <model-viewer 
                     src="razor-model.glb" 
                     alt="3D Razor Model" 
@@ -73,8 +74,10 @@
                     disable-zoom
                     shadow-intensity="1" 
                     environment-image="neutral"
+                    exposure="1.5" 
                     class="w-full h-full relative z-10 drop-shadow-2xl">
-                    <div class="absolute inset-0 flex items-center justify-center text-gray-500 text-sm -z-10">
+                    
+                    <div slot="poster" class="absolute inset-0 flex items-center justify-center text-gray-500 text-sm -z-10">
                         [ 3D Model Loading... ]
                     </div>
                 </model-viewer>
