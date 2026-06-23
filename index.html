@@ -188,6 +188,49 @@
             </div>
         </div>
     </footer>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <script>
+        // Initialize ScrollTrigger
+        gsap.registerPlugin(ScrollTrigger);
+
+        // 1. Hero Section Fade-in (Plays automatically when site loads)
+        gsap.from("nav", { y: -50, opacity: 0, duration: 1, ease: "power3.out" });
+        gsap.from(".pt-20 h2, .pt-20 p, .pt-20 div", { 
+            y: 40, 
+            opacity: 0, 
+            duration: 1, 
+            stagger: 0.2, 
+            ease: "power3.out",
+            delay: 0.3
+        });
+
+        // 2. Features Grid Reveal (Plays when user scrolls down)
+        gsap.from("#features .glass-panel", {
+            scrollTrigger: {
+                trigger: "#features",
+                start: "top 80%", // Triggers when the section reaches 80% of screen height
+            },
+            y: 50,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.2, // Each card comes up one after another
+            ease: "power2.out"
+        });
+
+        // 3. Build Your Razor Section Reveal
+        gsap.from("#build > div", {
+            scrollTrigger: {
+                trigger: "#build",
+                start: "top 75%",
+            },
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            ease: "power3.out"
+        });
+    </script>
 
 </body>
   </html>
