@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RazorLab | Premium Personalized Shaving</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom Premium Utilities */
+        .metallic-text {
+            background: linear-gradient(135deg, #f3f4f6 0%, #9ca3af 50%, #d1d5db 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .metallic-bg {
+            background: linear-gradient(135deg, #374151 0%, #111827 100%);
+            border: 1px solid #4b5563;
+        }
+        .glass-panel {
+            background: rgba(17, 24, 39, 0.7);
+            backdrop-filter: blur(12px);
+            border: 1px solid rgba(156, 163, 175, 0.15);
+        }
+        /* Simple float animation for the 3D placeholder */
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+        .animate-float {
+            animation: float 4s ease-in-out infinite;
+        }
+    </style>
+</head>
+<body class="bg-black text-gray-200 font-sans antialiased selection:bg-gray-700 selection:text-white">
+
+    <!-- Navbar -->
+    <nav class="fixed w-full z-50 glass-panel border-b-0">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <h1 class="text-2xl font-bold tracking-widest metallic-text">RAZORLAB</h1>
+            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
+                <a href="#build" class="hover:text-white transition">Build Your Razor</a>
+                <a href="#analyzer" class="hover:text-white transition">Beard AI</a>
+                <a href="#club" class="hover:text-white transition">The Club</a>
+            </div>
+            <button class="px-5 py-2 text-sm font-semibold text-black bg-gray-200 hover:bg-white rounded-full transition shadow-[0_0_15px_rgba(255,255,255,0.3)]">
+                Login
+            </button>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
+        <!-- Abstract Background Glow -->
+        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gray-800 rounded-full blur-[120px] opacity-30 pointer-events-none"></div>
+        
+        <div class="relative z-10 text-center max-w-4xl px-6">
+            <h2 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 metallic-text">
+                The Future of Grooming.
+            </h2>
+            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
+                Analyze your beard. Customize your blade. Master your routine. Experience the ultimate personalized shave.
+            </p>
+            
+            <!-- 3D Razor Placeholder (Replace with Three.js Canvas later) -->
+            <div class="w-64 h-64 mx-auto mb-10 metallic-bg rounded-full flex items-center justify-center animate-float shadow-2xl">
+                <span class="text-gray-400 text-sm tracking-widest">[ 3D RAZOR MODEL ]</span>
+            </div>
+
+            <div class="flex flex-col sm:flex-row justify-center gap-4">
+                <a href="#build" class="px-8 py-4 bg-gray-200 text-black font-bold rounded-full hover:bg-white transition hover:scale-105">
+                    Start Building
+                </a>
+                <a href="#analyzer" class="px-8 py-4 glass-panel text-white font-bold rounded-full hover:bg-gray-800 transition">
+                    Try AI Analyzer
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Grid -->
+    <section class="py-24 px-6 max-w-7xl mx-auto" id="features">
+        <h3 class="text-3xl font-bold mb-12 text-center metallic-text">The RazorLab Ecosystem</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            <!-- Feature 1 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
+                <div class="text-4xl mb-4">🧔</div>
+                <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">AI Beard Analyzer</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Upload a selfie. Our AI maps your facial hair density, skin type, and growth direction to recommend the perfect blade.
+                </p>
+            </div>
+
+            <!-- Feature 2 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
+                <div class="text-4xl mb-4">🧴</div>
+                <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">Routine Generator</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Say goodbye to razor burn. Get a personalized morning and night pre/post-shave routine based on your skin type.
+                </p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
+                <div class="text-4xl mb-4">📅</div>
+                <h4 class="text-xl font-bold mb-3 text-white group-hover:metallic-text transition">Smart Reminders</h4>
+                <p class="text-gray-400 text-sm leading-relaxed">
+                    Never shave with a dull blade again. Get automated push notifications when it's time to swap your cartridge.
+                </p>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-gray-800 py-10 mt-20">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
+            <p class="text-gray-500 text-sm">© 2026 RazorLab. All rights reserved.</p>
+            <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-500">
+                <a href="#" class="hover:text-gray-300">Museum</a>
+                <a href="#" class="hover:text-gray-300">Virtual Barber</a>
+                <a href="#" class="hover:text-gray-300">Privacy</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+  </html>
