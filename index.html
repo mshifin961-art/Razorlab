@@ -278,15 +278,16 @@
                     // Face Detected! Show Results
                     document.getElementById('result-area').classList.remove('hidden');
                 } else {
-                    // Fake Photo / No Face Detected
-                    alert("Bro, ithil face detect cheyyan pattiyailla! 🚫 Please upload a clear human selfie.");
+                    // Premium Error Message for No Face
+                    alert("Facial structure not detected. Please upload a clear, front-facing selfie for an accurate analysis.");
                     resetScan();
                 }
             } catch (error) {
                 console.error("AI Error:", error);
-                alert("Scanning failed. Please try again with a different photo.");
+                // Premium Error Message for System Failure
+                alert("Analysis interrupted. Please ensure the image is clear and try again.");
                 resetScan();
-            }
+        }
         }
 
         function resetScan() {
