@@ -232,9 +232,12 @@
         </div>
     </footer>
 
+    <!-- Real AI: Face API Library -->
+    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
+
     <!-- Scripts -->
     <script>
-        // Customizer Logic
+        // --- 1. Customizer Logic ---
         function changeColor(colorClass) {
             const preview = document.getElementById('razor-preview-color');
             preview.className = `w-16 h-48 rounded-lg shadow-inner transition-colors duration-500 ${colorClass}`;
@@ -243,17 +246,52 @@
             document.getElementById('razor-preview-blade').innerText = bladeText;
         }
 
-        // AI Scanner Logic
-        function startScan() {
+        // --- 2. Real AI Scanner Logic ---
+        
+        // Load AI Models from GitHub when page loads
+        Promise.all([
+            faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models')
+        ]).then(() => {
+            console.log("Real AI Models Loaded Successfully!");
+        });
+
+        async function startScan() {
+            const fileInput = document.getElementById('file-upload');
+            const file = fileInput.files[0];
+            
+            if (!file) return;
+
+            // Show scanning animation
             document.getElementById('upload-area').classList.add('hidden');
             document.getElementById('scan-area').classList.remove('hidden');
-            setTimeout(() => {
+
+            try {
+                // Convert uploaded file to an image element for AI to read
+                const img = await faceapi.bufferToImage(file);
+                
+                // AI DETECTS FACE HERE
+                const detections = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions());
+
                 document.getElementById('scan-area').classList.add('hidden');
-                document.getElementById('result-area').classList.remove('hidden');
-            }, 3000);
+
+                if (detections.length > 0) {
+                    // Face Detected! Show Results
+                    document.getElementById('result-area').classList.remove('hidden');
+                } else {
+                    // Fake Photo / No Face Detected
+                    alert("Bro, ithil face detect cheyyan pattiyailla! 🚫 Please upload a clear human selfie.");
+                    resetScan();
+                }
+            } catch (error) {
+                console.error("AI Error:", error);
+                alert("Scanning failed. Please try again with a different photo.");
+                resetScan();
+            }
         }
+
         function resetScan() {
             document.getElementById('result-area').classList.add('hidden');
+            document.getElementById('scan-area').classList.add('hidden');
             document.getElementById('upload-area').classList.remove('hidden');
             document.getElementById('file-upload').value = '';
         }
