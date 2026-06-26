@@ -106,6 +106,16 @@
 
         </div>
     </section>
-
+<script>
+        function buySubscription(planName, price) {
+            const orderDetails = { 
+                title: planName + " Plan", 
+                desc: "Monthly Subscription Delivery", 
+                price: price 
+            };
+            localStorage.setItem('razorOrder', JSON.stringify(orderDetails));
+            window.location.href = 'checkout.html';
+        }
+                </script>
 </body>
   </html>
