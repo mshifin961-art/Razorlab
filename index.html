@@ -441,10 +441,32 @@
                 <span>Total:</span>
                 <span id="cart-total">₹0</span>
             </div>
-            <button class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                Proceed to Checkout
+            <button onclick="goToCheckout()" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+    Proceed to Checkout
             </button>
         </div>
     </div>
+    <script>
+    function goToCheckout() {
+        if (typeof cart === 'undefined' || cart.length === 0) {
+            alert("Your kit is empty!");
+            return;
+        }
+        
+        // Calculate total and get item names
+        let totalAmount = 0;
+        cart.forEach(item => totalAmount += item.price);
+        
+        const itemName = cart.length === 1 ? cart[0].blade : "Custom Razor Kit (" + cart.length + " items)";
+        const itemDesc = cart.length === 1 ? cart[0].color + " Handle" : "Multiple Items";
+
+        // Save to LocalStorage
+        const orderDetails = { title: itemName, desc: itemDesc, price: totalAmount };
+        localStorage.setItem('razorOrder', JSON.stringify(orderDetails));
+        
+        // Go to checkout page
+        window.location.href = 'checkout.html';
+    }
+    </script>
 </body>
     </html>
