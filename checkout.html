@@ -29,7 +29,7 @@
     </nav>
 
     <div class="max-w-5xl mx-auto px-6 py-12">
-        <a href="index.html" class="text-gray-500 hover:text-white transition text-sm mb-8 inline-block">&larr; Back to Cart</a>
+        <a href="index.html" class="text-gray-500 hover:text-white transition text-sm mb-8 inline-block">&larr; Back to Home</a>
         
         <h2 class="text-3xl md:text-4xl font-extrabold mb-10 metallic-text">Secure Checkout</h2>
 
@@ -79,16 +79,16 @@
                         <div class="flex items-center gap-4">
                             <div class="w-8 h-16 bg-gray-900 rounded-md shadow-inner border border-gray-700"></div>
                             <div>
-                                <p class="text-white font-bold">5-Blade Pro</p>
-                                <p class="text-gray-500 text-sm">Custom Handle</p>
+                                <p id="checkout-title" class="text-white font-bold">Loading...</p>
+                                <p id="checkout-desc" class="text-gray-500 text-sm">Please wait</p>
                             </div>
                         </div>
-                        <p class="text-white font-bold">₹1,499</p>
+                        <p id="checkout-price" class="text-white font-bold">₹0</p>
                     </div>
 
                     <div class="flex justify-between text-gray-400 text-sm mb-3">
                         <span>Subtotal</span>
-                        <span>₹1,499</span>
+                        <span id="checkout-subtotal">₹0</span>
                     </div>
                     <div class="flex justify-between text-gray-400 text-sm mb-6 pb-6 border-b border-gray-800">
                         <span>Shipping</span>
@@ -96,18 +96,18 @@
                     </div>
                     <div class="flex justify-between text-2xl font-bold text-white mb-8">
                         <span>Total</span>
-                        <span>₹1,499</span>
+                        <span id="checkout-total">₹0</span>
                     </div>
+                    
                     <button id="pay-btn" type="button" onclick="processPayment()" class="relative w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)] overflow-hidden">
-    <span id="btn-text">Pay with UPI / Card</span>
-    
-    <!-- Loading Spinner (Hidden by default) -->
-    <div id="loading-spinner" class="hidden absolute inset-0 flex items-center justify-center bg-gray-200">
-        <svg class="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-        </svg>
-    </div>
+                        <span id="btn-text">Pay with UPI / Card</span>
+                        
+                        <div id="loading-spinner" class="hidden absolute inset-0 flex items-center justify-center bg-gray-200">
+                            <svg class="animate-spin h-6 w-6 text-black" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                            </svg>
+                        </div>
                     </button>
                 </div>
                 <p class="text-xs text-gray-600 text-center flex items-center justify-center gap-2">
@@ -117,7 +117,30 @@
 
         </div>
     </div>
+
     <script>
+        // Load data when page opens
+        window.onload = function() {
+            const savedOrder = localStorage.getItem('razorOrder');
+            if (savedOrder) {
+                const orderData = JSON.parse(savedOrder);
+                
+                // Update HTML with LocalStorage data
+                document.getElementById('checkout-title').innerText = orderData.title;
+                document.getElementById('checkout-desc').innerText = orderData.desc;
+                
+                const formattedPrice = '₹' + orderData.price.toLocaleString('en-IN');
+                document.getElementById('checkout-price').innerText = formattedPrice;
+                document.getElementById('checkout-subtotal').innerText = formattedPrice;
+                document.getElementById('checkout-total').innerText = formattedPrice;
+            } else {
+                // If directly opened without cart
+                document.getElementById('checkout-title').innerText = "Empty Kit";
+                document.getElementById('checkout-desc').innerText = "Please select an item from the shop.";
+            }
+        };
+
+        // Payment Simulation Logic
         function processPayment() {
             const btnText = document.getElementById('btn-text');
             const spinner = document.getElementById('loading-spinner');
@@ -126,10 +149,10 @@
             // 1. Show loading state
             btnText.classList.add('hidden');
             spinner.classList.remove('hidden');
-            payBtn.disabled = true; // Prevent double clicking
+            payBtn.disabled = true; 
             payBtn.classList.remove('hover:bg-gray-200');
 
-            // 2. Simulate Payment processing (3 seconds wait)
+            // 2. Simulate Payment processing
             setTimeout(() => {
                 spinner.classList.add('hidden');
                 btnText.classList.remove('hidden');
@@ -140,13 +163,16 @@
                 payBtn.classList.replace('text-black', 'text-white');
                 payBtn.classList.replace('shadow-[0_0_20px_rgba(255,255,255,0.2)]', 'shadow-[0_0_20px_rgba(34,197,94,0.4)]');
 
-                // 3. Redirect back to home after 2 seconds
+                // Clear cart data after successful payment
+                localStorage.removeItem('razorOrder');
+
+                // 3. Redirect back to home
                 setTimeout(() => {
                     window.location.href = 'index.html';
                 }, 2000);
                 
             }, 3000);
         }
-                </script>
+    </script>
 </body>
-          </html>
+                                </html>
