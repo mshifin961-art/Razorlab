@@ -243,6 +243,26 @@
             </div>
         </div>
     </footer>
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-96 h-full glass-panel border-l border-gray-800 transform translate-x-full transition-transform duration-500 z-50 flex flex-col">
+        <div class="p-6 border-b border-gray-800 flex justify-between items-center">
+            <h3 class="text-2xl font-bold metallic-text">Your Kit</h3>
+            <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-3xl font-light">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
+            <p class="text-gray-500 text-center mt-10">Your kit is empty.</p>
+        </div>
+        
+        <div class="p-6 border-t border-gray-800 bg-black/50">
+            <div class="flex justify-between text-lg font-bold text-white mb-6">
+                <span>Total:</span>
+                <span id="cart-total">₹0</span>
+            </div>
+            <button onclick="window.location.href='checkout.html'" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                Proceed to Checkout
+            </button>
+        </div>
+    </div>
 
     <!-- Real AI: Face API Library -->
     <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
