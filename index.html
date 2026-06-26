@@ -246,13 +246,83 @@
 
     <!-- Scripts -->
     <script>
-        // --- 1. Customizer Logic ---
-        function changeColor(colorClass) {
+        // --- 1. Customizer & Cart Logic ---
+        
+        // Default selected item
+        let currentRazor = {
+            color: "Silver",
+            blade: "5-Blade Pro",
+            price: 1499,
+            imageClass: "bg-gray-300"
+        };
+        
+        let cart = [];
+
+        function changeColor(colorClass, colorName) {
             const preview = document.getElementById('razor-preview-color');
             preview.className = `w-16 h-48 rounded-lg shadow-inner transition-colors duration-500 ${colorClass}`;
+            currentRazor.color = colorName;
+            currentRazor.imageClass = colorClass;
         }
-        function changeBlade(bladeText) {
+
+        function changeBlade(bladeText, price) {
             document.getElementById('razor-preview-blade').innerText = bladeText;
+            currentRazor.blade = bladeText;
+            currentRazor.price = price;
+            document.getElementById('product-price').innerText = '₹' + price;
+        }
+
+        function toggleCart() {
+            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+        }
+
+        function addToCart() {
+            cart.push({...currentRazor}); // Add current selection to cart array
+            updateCartUI();
+            toggleCart(); // Open cart panel automatically
+        }
+
+        function updateCartUI() {
+            const cartContainer = document.getElementById('cart-items');
+            const cartBadge = document.getElementById('cart-badge');
+            const cartTotal = document.getElementById('cart-total');
+            
+            // Update Icon Badge
+            cartBadge.innerText = cart.length;
+
+            if (cart.length === 0) {
+                cartContainer.innerHTML = '<p class="text-gray-500 text-center mt-10">Your kit is empty.</p>';
+                cartTotal.innerText = '₹0';
+                return;
+            }
+
+            let html = '';
+            let total = 0;
+
+            cart.forEach((item, index) => {
+                total += item.price;
+                html += `
+                    <div class="metallic-bg p-4 rounded-xl flex justify-between items-center">
+                        <div class="flex items-center gap-4">
+                            <div class="w-6 h-12 rounded-md ${item.imageClass} shadow-inner"></div>
+                            <div>
+                                <h4 class="text-white font-bold text-sm">${item.blade}</h4>
+                                <p class="text-gray-400 text-xs">${item.color} Handle</p>
+                                <p class="text-white mt-1 text-sm font-bold">₹${item.price}</p>
+                            </div>
+                        </div>
+                        <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-500 text-2xl transition">&times;</button>
+                    </div>
+                `;
+            });
+
+            cartContainer.innerHTML = html;
+            cartTotal.innerText = '₹' + total.toLocaleString('en-IN');
+        }
+
+        function removeFromCart(index) {
+            cart.splice(index, 1);
+            updateCartUI();
         }
 
         // --- 2. Real AI Scanner Logic ---
