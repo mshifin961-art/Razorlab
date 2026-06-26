@@ -1,250 +1,161 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RazorLab | Premium Personalized Shaving</title>
-    
-    <!-- Tailwind CSS -->
+    <title>RazorLab | Precision Grooming</title>
+    <!-- Tailwind -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FaceAPI -->
+    <script defer src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
     
-    <!-- 3D Model Viewer Script -->
-    <script type="module" src="https://ajax.googleapis.com/ajax/libs/model-viewer/3.4.0/model-viewer.min.js"></script>
-
     <style>
-        /* Custom Premium Utilities */
         .metallic-text {
             background: linear-gradient(135deg, #f3f4f6 0%, #9ca3af 50%, #d1d5db 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-        }
-        .metallic-bg {
-            background: linear-gradient(135deg, #374151 0%, #111827 100%);
-            border: 1px solid #4b5563;
         }
         .glass-panel {
             background: rgba(17, 24, 39, 0.7);
             backdrop-filter: blur(12px);
             border: 1px solid rgba(156, 163, 175, 0.15);
         }
-        /* Simple float animation */
-        @keyframes float {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
-        }
-        .animate-float {
-            animation: float 4s ease-in-out infinite;
-        }
     </style>
 </head>
-<body class="bg-black text-gray-200 font-sans antialiased selection:bg-gray-700 selection:text-white overflow-x-hidden">
+<body class="bg-black text-gray-200 font-sans antialiased selection:bg-gray-700 selection:text-white">
 
     <!-- Navbar -->
-    <nav class="fixed w-full z-50 glass-panel border-b-0">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+    <nav class="w-full z-50 glass-panel border-b-0 py-4 fixed top-0">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
             <h1 class="text-2xl font-bold tracking-widest metallic-text">RAZORLAB</h1>
-            <div class="hidden md:flex space-x-8 text-sm font-medium tracking-wide">
-                <a href="#build" class="hover:text-white transition">Build Your Razor</a>
-                <a href="#analyzer" class="hover:text-white transition">Beard AI</a>
-                <a href="#features" class="hover:text-white transition">Ecosystem</a>
-            </div>
-            <div class="flex items-center space-x-4">
-                <!-- Cart Button -->
-                <button onclick="toggleCart()" class="relative text-white hover:text-gray-300 transition">
+            <div class="flex items-center gap-6">
+                <a href="subscription.html" class="text-sm font-medium hover:text-white transition">Subscription</a>
+                <button onclick="toggleCart()" class="relative text-gray-300 hover:text-white transition">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <span id="cart-badge" class="absolute -top-2 -right-2 bg-white text-black text-xs font-bold w-5 h-5 flex items-center justify-center rounded-full">0</span>
-                </button>
-                <button class="hidden md:block px-5 py-2 text-sm font-semibold text-black bg-gray-200 hover:bg-white rounded-full transition shadow-[0_0_15px_rgba(255,255,255,0.3)]">
-                    Login
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-white text-black text-xs font-bold px-1.5 py-0.5 rounded-full">0</span>
                 </button>
             </div>
         </div>
     </nav>
+<!-- Hero Section -->
+    <header class="pt-32 pb-16 px-6 text-center max-w-4xl mx-auto pt-20" id="hero">
+        <h2 class="text-xs font-bold tracking-[0.3em] uppercase text-gray-500 mb-4">The VIP Experience</h2>
+        <h1 class="text-5xl md:text-7xl font-extrabold mb-6 metallic-text">Engineered for Perfection.</h1>
+        <p class="text-lg text-gray-400 mb-10 leading-relaxed">
+            Build your custom precision razor. Aerospace-grade materials, frictionless glide, and a design that commands respect.
+        </p>
+    </header>
 
-    <!-- Hero Section -->
-    <section class="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        <!-- Abstract Background Glow -->
-        <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-gray-800 rounded-full blur-[120px] opacity-30 pointer-events-none"></div>
-        
-        <div class="relative z-10 text-center max-w-4xl px-6">
-            <h2 class="text-5xl md:text-7xl font-extrabold tracking-tight mb-6 metallic-text">
-                The Future of Grooming.
-            </h2>
-            <p class="text-lg md:text-xl text-gray-400 mb-10 max-w-2xl mx-auto">
-                Analyze your beard. Customize your blade. Master your routine. Experience the ultimate personalized shave.
-            </p>
+    <!-- AI Upload Section -->
+    <section class="max-w-3xl mx-auto px-6 pb-24 text-center">
+        <div class="glass-panel p-10 rounded-3xl border border-gray-700 relative overflow-hidden">
+            <h2 class="text-2xl font-bold text-white mb-4">AI Beard Analyzer</h2>
+            <p class="text-gray-400 mb-8">Upload a selfie. Let our AI build your perfect routine.</p>
             
-            <!-- 3D Razor Interactive Model -->
-            <div class="w-80 h-80 mx-auto mb-10 relative animate-float">
-                <div class="absolute inset-0 bg-gray-800 rounded-full blur-[60px] opacity-40"></div>
-                <model-viewer 
-                    src="razor-model.glb" 
-                    alt="3D Razor Model" 
-                    auto-rotate 
-                    camera-controls 
-                    disable-zoom
-                    shadow-intensity="1" 
-                    exposure="2" 
-                    class="w-full h-full relative z-10 drop-shadow-2xl">
-                </model-viewer>
+            <div id="upload-area">
+                <input type="file" id="file-upload" class="hidden" accept="image/*" onchange="startScan()">
+                <label for="file-upload" class="inline-flex flex-col items-center justify-center bg-gray-900 border border-gray-700 text-white font-bold py-10 px-12 rounded-xl cursor-pointer hover:bg-gray-800 transition">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 text-gray-400 mb-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                    <span>Tap to Upload Selfie</span>
+                </label>
+            </div>
+            
+            <div id="scan-area" class="hidden mt-6">
+                <div class="animate-pulse flex flex-col items-center">
+                    <div class="h-12 w-12 border-4 border-gray-500 border-t-white rounded-full animate-spin mb-4"></div>
+                    <p class="text-gray-400">Analyzing facial structure & density...</p>
+                </div>
+            </div>
+            
+            <div id="result-area" class="hidden mt-6 bg-green-900/30 border border-green-500/50 p-6 rounded-xl">
+                <p class="text-green-400 font-bold mb-2">Analysis Complete!</p>
+                <p class="text-white text-sm">Recommended: 5-Blade Pro Series for optimal glide.</p>
+                <button onclick="resetScan()" class="mt-4 text-xs text-gray-400 underline">Scan Again</button>
+            </div>
+        </div>
+    </section>
+<!-- The RazorLab Ecosystem -->
+    <section class="max-w-7xl mx-auto px-6 pb-24" id="analyzer">
+        <h2 class="text-3xl font-bold text-center text-white mb-12">The RazorLab Ecosystem</h2>
+        
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Feature 1 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 text-center">
+                <div class="flex justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4v2m-8-4a8 8 0 1116 0A8 8 0 014 11z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6a3 3 0 013.3 2.7M9 16a3.3 3.3 0 011.7-2.7" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">AI Mapping</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Our AI maps your facial hair density to recommend the perfect blade.</p>
             </div>
 
-            <div class="flex flex-col sm:flex-row justify-center gap-4">
-                <a href="#build" class="px-8 py-4 bg-gray-200 text-black font-bold rounded-full hover:bg-white transition hover:scale-105">
-                    Start Building
-                </a>
-                <a href="#analyzer" class="px-8 py-4 glass-panel text-white font-bold rounded-full hover:bg-gray-800 transition">
-                    Try AI Analyzer
-                </a>
+            <!-- Feature 2 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 text-center">
+                <div class="flex justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c.3.2.7.2 1 0m1-3l3 3m-3-3v8m-1 3l-3-3m3 3V8M9 5c.3.2.7.2 1 0m2 3l3-3m-3 3v8m-1 3l-3-3m3 3V8M3 5c.3.2.7.2 1 0m1 3l3-3m-3 3v8" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Routine Generator</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Get a personalized morning and night pre/post-shave routine.</p>
+            </div>
+
+            <!-- Feature 3 -->
+            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 text-center">
+                <div class="flex justify-center mb-6">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+                        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13a3 3 0 013-3l6 6m0 0l6-6" />
+                    </svg>
+                </div>
+                <h3 class="text-xl font-bold text-white mb-3">Smart Reminders</h3>
+                <p class="text-gray-400 text-sm leading-relaxed">Get automated push notifications to swap your cartridge on time.</p>
             </div>
         </div>
     </section>
 
-    <!-- AI Beard Analyzer Section -->
-    <section id="analyzer" class="py-24 px-6 max-w-7xl mx-auto mt-10">
-        <div class="text-center mb-12">
-            <h3 class="text-4xl font-extrabold mb-4 metallic-text">AI Beard Analyzer</h3>
-            <p class="text-gray-400">Upload a selfie. Let our AI build your perfect routine.</p>
-        </div>
-        
-        <div class="max-w-2xl mx-auto glass-panel p-8 md:p-12 rounded-3xl relative overflow-hidden text-center shadow-[0_0_50px_rgba(255,255,255,0.02)]">
-            
-            <!-- Upload Area -->
-            <div id="upload-area" class="border-2 border-dashed border-gray-600 rounded-2xl p-10 hover:border-gray-400 hover:bg-gray-800/50 transition duration-300 cursor-pointer" onclick="document.getElementById('file-upload').click()">
-                <div class="flex justify-center mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v.01" />
-    </svg>
-                </div>
-
-            <!-- Scanning Animation -->
-            <div id="scan-area" class="hidden py-10">
-                <div class="w-24 h-24 mx-auto rounded-full border-4 border-gray-800 border-t-white animate-spin mb-8 shadow-[0_0_30px_rgba(255,255,255,0.2)]"></div>
-                <h4 class="text-xl font-bold text-white mb-2 animate-pulse">Analyzing Facial Hair...</h4>
-                <p class="text-gray-500 text-sm">Mapping growth density & skin type</p>
+    <!-- Customizer Section -->
+    <section class="max-w-5xl mx-auto px-6 pb-24" id="build">
+        <div class="glass-panel p-8 md:p-12 rounded-3xl grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+            <div class="bg-gray-900 rounded-2xl h-80 flex items-center justify-center border border-gray-800 shadow-inner">
+                <p class="text-gray-600 text-sm tracking-widest uppercase">Razor Preview</p>
             </div>
-
-            <!-- Results Area -->
-            <div id="result-area" class="hidden py-6">
-                <div class="inline-block px-4 py-1 bg-green-900/30 border border-green-500/50 text-green-400 rounded-full text-xs font-bold tracking-widest mb-8">
-                    SCAN COMPLETE
-                </div>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6 text-left">
-                    <div class="metallic-bg p-6 rounded-xl">
-                        <h5 class="text-gray-400 text-xs uppercase tracking-widest mb-2 font-bold">Detected Profile</h5>
-                        <p class="text-2xl font-bold text-white mb-1">Thick & Coarse</p>
-                        <p class="text-gray-500 text-sm">Skin Type: Sensitive</p>
-                    </div>
-                    <div class="glass-panel border border-white/20 p-6 rounded-xl">
-                        <h5 class="text-gray-400 text-xs uppercase tracking-widest mb-2 font-bold">Recommended</h5>
-                        <p class="text-2xl font-bold text-white mb-1">5-Blade Pro</p>
-                        <p class="text-gray-500 text-sm">+ Aloe Pre-Shave Gel</p>
+            <div>
+                <h3 class="text-2xl font-bold text-white mb-6">Build Your Kit</h3>
+                <div class="mb-6">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-3 font-bold">1. Select Blade</label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <button onclick="selectBlade('3-Blade', 999)" class="py-3 border border-gray-600 rounded-lg hover:border-white transition text-sm font-medium">3-Blade Standard<br><span class="text-gray-400 text-xs">₹999</span></button>
+                        <button onclick="selectBlade('5-Blade Pro', 1499)" class="py-3 border border-white text-white rounded-lg transition text-sm font-medium bg-gray-800">5-Blade Pro<br><span class="text-gray-400 text-xs">₹1,499</span></button>
                     </div>
                 </div>
-                <button onclick="resetScan()" class="mt-8 px-8 py-3 bg-gray-800 text-white font-bold rounded-full hover:bg-gray-700 transition text-sm">
-                    Scan Another Face
+                <div class="mb-8">
+                    <label class="block text-xs uppercase tracking-widest text-gray-500 mb-3 font-bold">2. Handle Color</label>
+                    <div class="flex gap-4">
+                        <button onclick="selectColor('Stealth Black')" class="w-10 h-10 rounded-full bg-black border-2 border-gray-600 hover:border-white transition"></button>
+                        <button onclick="selectColor('Gunmetal Grey')" class="w-10 h-10 rounded-full bg-gray-600 border-2 border-gray-600 hover:border-white transition"></button>
+                    </div>
+                </div>
+                <button onclick="addToCart()" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+                    Add to Kit - <span id="display-price">₹1,499</span>
                 </button>
             </div>
         </div>
     </section>
-
-    <!-- Features Grid -->
-    <section class="py-24 px-6 max-w-7xl mx-auto" id="features">
-        <h3 class="text-3xl font-bold mb-12 text-center metallic-text">The RazorLab Ecosystem</h3>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
-                <div class="flex justify-center mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v2m0 4v2m-8-4a8 8 0 1116 0A8 8 0 014 11z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M10 6a3 3 0 013.3 2.7M9 16a3.3 3.3 0 011.7-2.7" />
-    </svg>
-                </div>
-            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
-                <div class="flex justify-center mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c.3.2.7.2 1 0m1-3l3 3m-3-3v8m-1 3l-3-3m3 3V8M9 5c.3.2.7.2 1 0m2 3l3-3m-3 3v8m-1 3l-3-3m3 3V8M3 5c.3.2.7.2 1 0m1 3l3-3m-3 3v8" />
-    </svg>
-                </div>
-            <div class="glass-panel p-8 rounded-2xl hover:border-gray-500 transition duration-300 group">
-                <div class="flex justify-center mb-6">
-    <svg xmlns="http://www.w3.org/2000/svg" class="h-16 w-16 text-gray-500 hover:text-white transition duration-500" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.2">
-        <path stroke-linecap="round" stroke-linejoin="round" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-        <path stroke-linecap="round" stroke-linejoin="round" d="M3 13a3 3 0 013-3l6 6m0 0l6-6" />
-    </svg>
-                </div>
-        </div>
-    </section>
-
-    <!-- Build Your Razor Section -->
-    <section id="build" class="py-24 px-6 max-w-7xl mx-auto border-t border-gray-800 mt-10">
-        <div class="flex flex-col md:flex-row gap-12 items-center">
-            
-            <!-- Visual Preview -->
-            <div class="w-full md:w-1/2 flex justify-center">
-                <div class="w-72 h-72 md:w-96 md:h-96 rounded-full metallic-bg flex items-center justify-center shadow-[0_0_40px_rgba(255,255,255,0.05)] relative">
-                    <div id="razor-preview-color" class="w-16 h-48 bg-gray-300 rounded-lg shadow-inner transition-colors duration-500"></div>
-                    <div class="absolute top-12 text-center w-full text-xs text-gray-400 font-bold tracking-widest uppercase" id="razor-preview-blade">5-Blade System</div>
-                </div>
-            </div>
-
-            <!-- Customization Controls -->
-            <div class="w-full md:w-1/2 space-y-8">
-                <div>
-                    <h3 class="text-4xl font-extrabold mb-2 metallic-text">Build Your Razor</h3>
-                    <p class="text-gray-400">Customize every detail for the perfect shave.</p>
-                </div>
-
-                <!-- Handle Color -->
-                <div>
-                    <h4 class="text-sm uppercase tracking-widest text-gray-500 mb-4 font-bold">1. Handle Color</h4>
-                    <div class="flex gap-4">
-                        <button onclick="changeColor('bg-gray-300', 'Silver')" class="w-12 h-12 rounded-full bg-gray-300 border-2 border-transparent focus:border-white transition hover:scale-110"></button>
-                        <button onclick="changeColor('bg-gray-900', 'Matte Black')" class="w-12 h-12 rounded-full bg-gray-900 border-2 border-gray-700 focus:border-white transition hover:scale-110"></button>
-                        <button onclick="changeColor('bg-yellow-600', 'Gold')" class="w-12 h-12 rounded-full bg-yellow-600 border-2 border-transparent focus:border-white transition hover:scale-110"></button>
-                    </div>
-                </div>
-
-                <!-- Blade Type -->
-                <div>
-                    <h4 class="text-sm uppercase tracking-widest text-gray-500 mb-4 font-bold">2. Blade Type</h4>
-                    <div class="grid grid-cols-2 gap-4 text-center">
-                        <button onclick="changeBlade('3-Blade Precision', 999)" class="glass-panel py-3 rounded-lg hover:bg-gray-800 transition border border-gray-700 focus:border-white text-white">
-                            3-Blade
-                        </button>
-                        <button onclick="changeBlade('5-Blade Pro', 1499)" class="glass-panel py-3 rounded-lg hover:bg-gray-800 transition border border-gray-700 focus:border-white text-white">
-                            5-Blade
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Add to Kit Button -->
-                <div class="pt-6 border-t border-gray-800 flex justify-between items-center">
-                    <span class="text-3xl font-bold text-white" id="product-price">₹1,499</span>
-                    <button onclick="addToCart()" class="px-8 py-3 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-                        Add to Kit
-                    </button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer class="border-t border-gray-800 py-10 mt-20">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center">
-            <p class="text-gray-500 text-sm">© 2026 RazorLab. All rights reserved.</p>
-            <div class="flex space-x-6 mt-4 md:mt-0 text-sm text-gray-500">
-                <a href="#" class="hover:text-gray-300">Museum</a>
-                <a href="subscription.html" class="hover:text-gray-300">Subscription Club</a>
-                <a href="#" class="hover:text-gray-300">Privacy</a>
-            </div>
-        </div>
+<!-- Footer -->
+    <footer class="border-t border-gray-800 py-8 text-center text-gray-600 text-sm">
+        <p>&copy; 2026 RazorLab. All rights reserved.</p>
     </footer>
-    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-96 h-full glass-panel border-l border-gray-800 transform translate-x-full transition-transform duration-500 z-50 flex flex-col">
+
+    <!-- Cart Sidebar Overlay -->
+    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-96 h-full glass-panel border-l border-gray-800 transform translate-x-full transition-transform duration-300 z-50 flex flex-col hidden">
         <div class="p-6 border-b border-gray-800 flex justify-between items-center">
             <h3 class="text-2xl font-bold metallic-text">Your Kit</h3>
             <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-3xl font-light">&times;</button>
@@ -253,144 +164,99 @@
         <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
             <p class="text-gray-500 text-center mt-10">Your kit is empty.</p>
         </div>
-        
+
         <div class="p-6 border-t border-gray-800 bg-black/50">
             <div class="flex justify-between text-lg font-bold text-white mb-6">
                 <span>Total:</span>
                 <span id="cart-total">₹0</span>
             </div>
-            <button onclick="window.location.href='checkout.html'" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
+            <button onclick="goToCheckout()" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
                 Proceed to Checkout
             </button>
         </div>
     </div>
-
-    <!-- Real AI: Face API Library -->
-    <script src="https://cdn.jsdelivr.net/npm/face-api.js@0.22.2/dist/face-api.min.js"></script>
-
-    <!-- Scripts -->
+<!-- GSAP Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
     <script>
-        // --- 1. Customizer & Cart Logic ---
-        
-        // Default selected item
-        let currentRazor = {
-            color: "Silver",
-            blade: "5-Blade Pro",
-            price: 1499,
-            imageClass: "bg-gray-300"
-        };
-        
+        // Customizer & Cart Logic
+        let currentBlade = '5-Blade Pro';
+        let currentPrice = 1499;
+        let currentColor = 'Stealth Black';
         let cart = [];
 
-        function changeColor(colorClass, colorName) {
-            const preview = document.getElementById('razor-preview-color');
-            preview.className = `w-16 h-48 rounded-lg shadow-inner transition-colors duration-500 ${colorClass}`;
-            currentRazor.color = colorName;
-            currentRazor.imageClass = colorClass;
+        function selectBlade(blade, price) {
+            currentBlade = blade;
+            currentPrice = price;
+            document.getElementById('display-price').innerText = '₹' + price.toLocaleString('en-IN');
         }
 
-        function changeBlade(bladeText, price) {
-            document.getElementById('razor-preview-blade').innerText = bladeText;
-            currentRazor.blade = bladeText;
-            currentRazor.price = price;
-            document.getElementById('product-price').innerText = '₹' + price;
+        function selectColor(color) {
+            currentColor = color;
         }
 
         function toggleCart() {
-            document.getElementById('cart-sidebar').classList.toggle('translate-x-full');
+            const sidebar = document.getElementById('cart-sidebar');
+            sidebar.classList.toggle('hidden');
+            setTimeout(() => { sidebar.classList.toggle('translate-x-full'); }, 10);
         }
 
         function addToCart() {
-            cart.push({...currentRazor}); // Add current selection to cart array
+            cart.push({ blade: currentBlade, color: currentColor, price: currentPrice });
             updateCartUI();
-            toggleCart(); // Open cart panel automatically
+            toggleCart();
         }
 
         function updateCartUI() {
-            const cartContainer = document.getElementById('cart-items');
-            const cartBadge = document.getElementById('cart-badge');
-            const cartTotal = document.getElementById('cart-total');
-            
-            // Update Icon Badge
-            cartBadge.innerText = cart.length;
-
-            if (cart.length === 0) {
-                cartContainer.innerHTML = '<p class="text-gray-500 text-center mt-10">Your kit is empty.</p>';
-                cartTotal.innerText = '₹0';
-                return;
-            }
-
-            let html = '';
+            document.getElementById('cart-count').innerText = cart.length;
+            let cartHTML = '';
             let total = 0;
-
-            cart.forEach((item, index) => {
-                total += item.price;
-                html += `
-                    <div class="metallic-bg p-4 rounded-xl flex justify-between items-center">
-                        <div class="flex items-center gap-4">
-                            <div class="w-6 h-12 rounded-md ${item.imageClass} shadow-inner"></div>
-                            <div>
-                                <h4 class="text-white font-bold text-sm">${item.blade}</h4>
-                                <p class="text-gray-400 text-xs">${item.color} Handle</p>
-                                <p class="text-white mt-1 text-sm font-bold">₹${item.price}</p>
-                            </div>
+            if(cart.length === 0) {
+                cartHTML = '<p class="text-gray-500 text-center mt-10">Your kit is empty.</p>';
+            } else {
+                cart.forEach((item) => {
+                    total += item.price;
+                    cartHTML += `
+                    <div class="bg-gray-900 p-4 rounded-xl border border-gray-700 flex justify-between items-center">
+                        <div>
+                            <p class="text-white font-bold">${item.blade}</p>
+                            <p class="text-gray-500 text-xs">${item.color} Handle</p>
                         </div>
-                        <button onclick="removeFromCart(${index})" class="text-gray-500 hover:text-red-500 text-2xl transition">&times;</button>
-                    </div>
-                `;
-            });
-
-            cartContainer.innerHTML = html;
-            cartTotal.innerText = '₹' + total.toLocaleString('en-IN');
+                        <p class="text-white font-bold">₹${item.price.toLocaleString('en-IN')}</p>
+                    </div>`;
+                });
+            }
+            document.getElementById('cart-items').innerHTML = cartHTML;
+            document.getElementById('cart-total').innerText = '₹' + total.toLocaleString('en-IN');
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
+        function goToCheckout() {
+            if (cart.length === 0) { alert("Your kit is empty!"); return; }
+            let totalAmount = 0;
+            cart.forEach(item => totalAmount += item.price);
+            const itemName = cart.length === 1 ? cart[0].blade : "Custom Razor Kit";
+            const itemDesc = cart.length === 1 ? cart[0].color : "Multiple Items";
+            localStorage.setItem('razorOrder', JSON.stringify({ title: itemName, desc: itemDesc, price: totalAmount }));
+            window.location.href = 'checkout.html';
         }
 
-        // --- 2. Real AI Scanner Logic ---
-        
-        // Load AI Models from GitHub when page loads
-        Promise.all([
-            faceapi.nets.tinyFaceDetector.loadFromUri('https://justadudewhohacks.github.io/face-api.js/models')
-        ]).then(() => {
-            console.log("Real AI Models Loaded Successfully!");
-        });
-
+        // AI Scanner Logic
         async function startScan() {
-            const fileInput = document.getElementById('file-upload');
-            const file = fileInput.files[0];
-            
-            if (!file) return;
-
-            // Show scanning animation
             document.getElementById('upload-area').classList.add('hidden');
             document.getElementById('scan-area').classList.remove('hidden');
-
+            
             try {
-                // Convert uploaded file to an image element for AI to read
-                const img = await faceapi.bufferToImage(file);
-                
-                // AI DETECTS FACE HERE
-                const detections = await faceapi.detectAllFaces(img, new faceapi.TinyFaceDetectorOptions());
-
-                document.getElementById('scan-area').classList.add('hidden');
-
-                if (detections.length > 0) {
-                    // Face Detected! Show Results
+                // Simulate AI Processing Time
+                setTimeout(() => {
+                    document.getElementById('scan-area').classList.add('hidden');
                     document.getElementById('result-area').classList.remove('hidden');
-                } else {
-                    // Premium Error Message for No Face
-                    alert("Facial structure not detected. Please upload a clear, front-facing selfie for an accurate analysis.");
-                    resetScan();
-                }
+                }, 3000);
             } catch (error) {
                 console.error("AI Error:", error);
-                // Premium Error Message for System Failure
-                alert("Analysis interrupted. Please ensure the image is clear and try again.");
+                alert("Analysis interrupted. Please try again.");
                 resetScan();
-        }
+            }
         }
 
         function resetScan() {
@@ -399,75 +265,25 @@
             document.getElementById('upload-area').classList.remove('hidden');
             document.getElementById('file-upload').value = '';
         }
-    </script>
 
-    <!-- GSAP Animations -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
-    <script>
+        // GSAP Scroll Animations
         gsap.registerPlugin(ScrollTrigger);
 
-        // Hero Init
         gsap.from("nav", { y: -50, opacity: 0, duration: 1, ease: "power3.out" });
-        gsap.from(".pt-20 h2, .pt-20 p, .pt-20 div", { 
-            y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.3 
+        gsap.from("#hero h2, #hero h1, #hero p", { y: 40, opacity: 0, duration: 1, stagger: 0.2, ease: "power3.out", delay: 0.3 });
+        
+        gsap.from("#analyzer > div", { 
+            scrollTrigger: { trigger: "#analyzer", start: "top 80%" }, 
+            y: 50, opacity: 0, duration: 1, ease: "power3.out" 
         });
-
-        // Sections Fade In
-        gsap.from("#analyzer > div", {
-            scrollTrigger: { trigger: "#analyzer", start: "top 80%" },
-            y: 50, opacity: 0, duration: 1, ease: "power3.out"
+        
+        gsap.from("#build > div", { 
+            scrollTrigger: { trigger: "#build", start: "top 75%" }, 
+            y: 50, opacity: 0, duration: 1, ease: "power3.out" 
         });
-
-        gsap.from("#build > div", {
-            scrollTrigger: { trigger: "#build", start: "top 75%" },
-            y: 50, opacity: 0, duration: 1, ease: "power3.out"
-        });
-    </script>
-    <!-- Cart Sidebar Overlay -->
-    <div id="cart-sidebar" class="fixed top-0 right-0 w-full md:w-96 h-full glass-panel border-l border-gray-800 transform translate-x-full transition-transform duration-500 z-50 flex flex-col">
-        <div class="p-6 border-b border-gray-800 flex justify-between items-center">
-            <h3 class="text-2xl font-bold metallic-text">Your Kit</h3>
-            <button onclick="toggleCart()" class="text-gray-400 hover:text-white text-3xl font-light">&times;</button>
-        </div>
-        
-        <!-- Items Container -->
-        <div id="cart-items" class="flex-1 overflow-y-auto p-6 space-y-4">
-            <p class="text-gray-500 text-center mt-10">Your kit is empty.</p>
-        </div>
-        
-        <!-- Checkout Section -->
-        <div class="p-6 border-t border-gray-800 bg-black/50">
-            <div class="flex justify-between text-lg font-bold text-white mb-6">
-                <span>Total:</span>
-                <span id="cart-total">₹0</span>
-            </div>
-            <button onclick="goToCheckout()" class="w-full py-4 bg-white text-black font-bold rounded-full hover:bg-gray-200 transition shadow-[0_0_20px_rgba(255,255,255,0.2)]">
-    Proceed to Checkout
-            </button>
-        </div>
-    </div>
-    <script>
-    function goToCheckout() {
-        if (typeof cart === 'undefined' || cart.length === 0) {
-            alert("Your kit is empty!");
-            return;
-        }
-        
-        // Calculate total and get item names
-        let totalAmount = 0;
-        cart.forEach(item => totalAmount += item.price);
-        
-        const itemName = cart.length === 1 ? cart[0].blade : "Custom Razor Kit (" + cart.length + " items)";
-        const itemDesc = cart.length === 1 ? cart[0].color + " Handle" : "Multiple Items";
-
-        // Save to LocalStorage
-        const orderDetails = { title: itemName, desc: itemDesc, price: totalAmount };
-        localStorage.setItem('razorOrder', JSON.stringify(orderDetails));
-        
-        // Go to checkout page
-        window.location.href = 'checkout.html';
-    }
     </script>
 </body>
-    </html>
+</html>
+
+
+
